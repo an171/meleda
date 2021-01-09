@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="fav.ico"  type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меледа</title>
+    <style>
+        body {
+            background-color: #562B2B;
+            color: #B4B4B4;
+        }
+        #rings img{
+            width:10vw;
+            position: relative;
+        }
+        #rings {
+            position: relative;
+            width:max-content;
+            margin: 10vh auto;
+            border: 0px solid black;
+        }
+        .move {            
+            transform:translateY(20vw);
+        }  
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }                     
+        header {
+            padding:0 50px;
+            position: relative;
+        }
+        form {
+            position: absolute;
+            width: 100%;
+            z-index: -10;
+            top: 4vw;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            font-size:2vw;
+            background-color:  #B4B4B4;
+            color:  #562B2B;
+            border: 0;
+            text-align: center;
+            visibility:hidden;
+        }
+        #refresh {
+            visibility: hidden;
+        }
+        #refresh:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        
+    <h1>Меледа</h1>
+    <p>Меледа — старинная русская головоломка, происходящая, предположительно, из Китая. 
+        Она состоит из замкнутой проволочной «вилки» («челнока»), имеющей вид длинной шпильки для волос 
+        и воткнутой обоими свободными концами в рукоятку, и нескольких колец, связанных между собой 
+        довольно сложным образом. Задача состоит в том, чтобы снять всю систему колец 
+        с вилки или надеть её обратно.
+    </p>
+    <p>
+        Приведем правила, которые необходимо соблюдать при решении головоломки. 
+        Последнее (крайнее правое) кольцо можно всегда снять или надеть на вилку. 
+        Любое другое кольцо можно снять или надеть только тогда, когда кольцо непосредственно 
+        справа от него надето, а все остальные справа — сняты.
+    </p>
+    <p>
+        Предлагаем снять кольца с виртуального варианта меледы с четырьмя кольцами. 
+    </p>
+   </header>
+    <section id="rings">
+        <form><input type="text" readonly><br>
+            <img src="icons-1294569_640.png" id="refresh" style="width: 15px; width: 25px; padding: 5px;">
+        </form>
+        <img src="Wedding-Silver-Ring-PNG-Image-Transparent-Background.png" id="r1">
+        <img src="Wedding-Silver-Ring-PNG-Image-Transparent-Background.png" id="r2">
+        <img src="Wedding-Silver-Ring-PNG-Image-Transparent-Background.png" id="r3">
+        <img src="Wedding-Silver-Ring-PNG-Image-Transparent-Background.png" id="r4">
+    </section>
+<script>
+    var arr1=[1,1,1,1]
+    var s=0
+    r4.onclick=function () {
+       s++ 
+       el=document.querySelector("#r4")
+       if (arr1[3]==1) {
+           el.classList.add("move")
+           arr1[3]=0
+       }
+       else if (arr1[3]==0) {
+           el.classList.remove("move")
+           arr1[3]=1
+       }
+       if (arr1.every (x=>x==0)) msgBingo()
+    }
+    r3.onclick=function () {
+       s++
+       el=document.querySelector("#r3")
+       if (arr1[2]==1 && arr1[3]==1) {
+           el.classList.add("move")
+           arr1[2]=0
+       }
+       else if (arr1[2]==0 && arr1[3]==1) {
+           el.classList.remove("move")
+           arr1[2]=1
+       }
+       else {
+           msg1()
+           setTimeout("msg1Hide()",2000)
+            //clearInterval(k)
+       }
+    }
+    r2.onclick=function () {
+       s++
+       el=document.querySelector("#r2")
+       if (arr1[1]==1 && arr1[2]==1 && arr1[3]==0) {
+           el.classList.add("move")
+           arr1[1]=0
+       }
+       else if (arr1[1]==0 && arr1[2]==1 && arr1[3]==0) {
+           el.classList.remove("move")
+           arr1[1]=1
+       }
+       else {
+           msg1()
+           setTimeout("msg1Hide()",2000)
+            //clearInterval(k)
+       }
+    }
+    r1.onclick=function () {
+       s++
+       el=document.querySelector("#r1")
+       if (arr1[0]==1 && arr1[1]==1 && arr1[2]==0 && arr1[3]==0) {
+           el.classList.add("move")
+           arr1[0]=0
+       }
+       else if (arr1[0]==0 && arr1[1]==1 && arr1[2]==0 && arr1[3]==0) {
+           el.classList.remove("move")
+           arr1[0]=1
+       }
+       else {
+           msg1()
+           setTimeout("msg1Hide()",2000)
+            //clearInterval(k)
+       }
+    }
+    function msg1 () {
+        lbl=document.querySelector("input")
+        lbl.style.visibility="visible"
+        frm=document.querySelector("form")
+        frm.style.zIndex="10"
+        lbl.value="операция запрещена правилами игры"
+    }
+    function msg1Hide () {
+        lbl=document.querySelector("input")
+        lbl.style.visibility="hidden"
+        frm=document.querySelector("form")
+        frm.style.zIndex="-10"
+    }
+    function msgBingo () {
+        lbl=document.querySelector("input")
+        refresh=document.querySelector("#refresh")
+        lbl.style.visibility="visible"
+        frm=document.querySelector("form")
+        frm.style.zIndex="10"
+        lbl.value=`Головоломка пройдена за ${s} шагов!`
+        refresh.style.visibility="visible"
+    }
+    refresh.onclick=function () {
+        window.location.reload()
+    }
+</script>
+</body>
+</html>
